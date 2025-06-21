@@ -7,6 +7,18 @@ const products = [
 ];
 
 const cart = [];
+const debounceMap = new Map();
+
+function debounceProduct(productId, callback) {
+  if (debounceMap.has(productId)) return;
+
+  debounceMap.set(productId, true);
+  callback();
+
+  setTimeout(() => {
+    debounceMap.delete(productId);
+  }, 170);
+}
 
 function renderProducts() {
   const productList = document.getElementById('products');
@@ -21,7 +33,8 @@ function renderProducts() {
     img.classList.add('product-img');
 
     const name = document.createElement('div');
-    name.textContent = `${product.name} - R$ ${product.price.toFixed(2)}`;
+    name.classList.add('cart-item-name');
+    name.textContent = `${product.name}\nR$ ${product.price.toFixed(2)}`;
 
     const existing = cart.find(item => item.id === product.id);
     const controls = document.createElement('div');
@@ -29,14 +42,18 @@ function renderProducts() {
     if (existing) {
       const minusBtn = document.createElement('button');
       minusBtn.textContent = '-';
-      minusBtn.onclick = () => updateQuantity(product.id, -1);
+      minusBtn.onclick = () => {
+        debounceProduct(product.id, () => updateQuantity(product.id, -1));
+      };
 
       const qty = document.createElement('span');
       qty.textContent = ` ${existing.quantity} `;
 
       const plusBtn = document.createElement('button');
       plusBtn.textContent = '+';
-      plusBtn.onclick = () => updateQuantity(product.id, 1);
+      plusBtn.onclick = () => {
+        debounceProduct(product.id, () => updateQuantity(product.id, 1));
+      };
 
       controls.appendChild(minusBtn);
       controls.appendChild(qty);
@@ -44,7 +61,9 @@ function renderProducts() {
     } else {
       const addBtn = document.createElement('button');
       addBtn.textContent = 'Adicionar ao Carrinho';
-      addBtn.onclick = () => updateQuantity(product.id, 1);
+      addBtn.onclick = () => {
+        debounceProduct(product.id, () => updateQuantity(product.id, 1));
+      };
       controls.appendChild(addBtn);
     }
 
@@ -59,21 +78,29 @@ function renderCart() {
   const cartList = document.getElementById('cart-items');
   cartList.innerHTML = '';
 
+  let totalGeral = 0;
+
   cart.forEach(item => {
     const li = document.createElement('li');
 
     const info = document.createElement('span');
-    info.textContent = `${item.name} - R$ ${(item.price * item.quantity).toFixed(2)} - Qtd: ${item.quantity}`;
+    info.textContent = `${item.name} - Qtd: ${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}`;
+
+    totalGeral += item.price * item.quantity;
 
     const controls = document.createElement('span');
 
     const minusBtn = document.createElement('button');
     minusBtn.textContent = '-';
-    minusBtn.onclick = () => updateQuantity(item.id, -1);
+    minusBtn.onclick = () => {
+      debounceProduct(item.id, () => updateQuantity(item.id, -1));
+    };
 
     const plusBtn = document.createElement('button');
     plusBtn.textContent = '+';
-    plusBtn.onclick = () => updateQuantity(item.id, 1);
+    plusBtn.onclick = () => {
+      debounceProduct(item.id, () => updateQuantity(item.id, 1));
+    };
 
     const removeBtn = document.createElement('button');
     removeBtn.textContent = 'X';
@@ -89,12 +116,13 @@ function renderCart() {
     cartList.appendChild(li);
   });
 
+  const totalElement = document.createElement('div');
+  totalElement.classList.add('cart-total');
+  totalElement.textContent = `Total: R$ ${totalGeral.toFixed(2)}`;
+
+  cartList.appendChild(totalElement);
   updateCartCount();
-  renderProducts();
 }
-
-
-
 
 function updateQuantity(productId, change) {
   const item = cart.find(p => p.id === productId);
@@ -102,12 +130,14 @@ function updateQuantity(productId, change) {
     item.quantity += change;
     if (item.quantity <= 0) {
       removeFromCart(productId);
+      return;
     }
   } else if (change > 0) {
     const product = products.find(p => p.id === productId);
     if (product) cart.push({ ...product, quantity: 1 });
   }
   renderCart();
+  renderProducts();
 }
 
 function removeFromCart(productId) {
@@ -115,6 +145,7 @@ function removeFromCart(productId) {
   if (index !== -1) {
     cart.splice(index, 1);
     renderCart();
+    renderProducts();
   }
 }
 

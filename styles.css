@@ -42,6 +42,7 @@ main {
 
 #products {
   display: flex;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -53,6 +54,7 @@ li {
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(255,255,255,0.1);
   display: flex;
+  min-width: 200px;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -119,11 +121,11 @@ button.remove-btn {
 
 #extra-fields label {
   display: block;
-  margin-top: 10px;
+  margin: 10px 0;
 }
 
 input, select {
-  width: 100%;
+  width: 95%;
   padding: 5px;
   margin-top: 5px;
   border-radius: 4px;
@@ -134,8 +136,10 @@ input, select {
   background: none;
   padding: 4px 0;
   border: none;
+  /* min-width: 250px; */
   box-shadow: none;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
@@ -167,4 +171,53 @@ input, select {
 #cart-items {
   padding: 0;
   margin: 0;
+}
+
+.open-cart-button {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #f1496b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cart-item-name {
+  white-space: pre-line;
+}
+
+.cart-total {
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: right;
+}
+
+
+@media (max-width: 600px) {
+  #products {
+    padding: 0;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  #products li {
+    min-width: 140px; /* Reduzindo o tamanho mínimo */
+    min-height: 160px;
+    max-width: 45%;    /* Para tentar manter 2 por linha, mesmo em telas pequenas */
+    font-size: 13px;   /* Opcional: diminuir um pouco a fonte */
+    padding: 8px 24px;
+  }
+
+  .product-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  button {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
 }

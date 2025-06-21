@@ -19,6 +19,8 @@
       <h2>Produtos</h2>
       <ul id="products"></ul>
     </section>
+    <button class="open-cart-button" onclick="toggleCart()">Ver Carrinho</button>
+
   </main>
 
 <div id="cart-overlay" onclick="toggleCart()"></div>
@@ -28,41 +30,41 @@
     <h2>Carrinho</h2>
     <ul id="cart-items"></ul>
 
-<div id="extra-fields">
-  <label>Rua:
-    <input type="text" id="address-street" placeholder="Ex: Rua das Flores">
-  </label>
+        <div id="extra-fields">
+        <label>Rua:
+            <input type="text" id="address-street" placeholder="Ex: Rua das Flores">
+        </label>
 
-  <label>Número:
-    <input type="text" id="address-number" placeholder="Ex: 123">
-  </label>
+        <label>Número:
+            <input type="text" id="address-number" placeholder="Ex: 123">
+        </label>
 
-  <label>Complemento:
-    <input type="text" id="address-complement" placeholder="Ex: Apt 12B">
-  </label>
+        <label>Complemento:
+            <input type="text" id="address-complement" placeholder="Ex: Apt 12B">
+        </label>
 
-  <label>Bairro:
-    <input type="text" id="address-neighborhood" placeholder="Ex: Centro">
-  </label>
+        <label>Bairro:
+            <input type="text" id="address-neighborhood" placeholder="Ex: Centro">
+        </label>
 
-  <label>Cidade:
-    <input type="text" id="address-city" placeholder="Ex: São Paulo">
-  </label>
+        <label>Cidade:
+            <input type="text" id="address-city" placeholder="Ex: São Paulo">
+        </label>
 
-  <label>Telefone:
-    <input type="text" id="address-phone" placeholder="Ex: (11) 99999-9999">
-  </label>
+        <label>Telefone:
+            <input type="text" id="address-phone" placeholder="Ex: (11) 99999-9999">
+        </label>
 
-  <label>Forma de Pagamento:
-    <select id="payment-method">
-      <option value="PIX">PIX</option>
-      <option value="Cartão de Crédito">Cartão de Crédito</option>
-      <option value="Débito">Débito</option>
-      <option value="Vale Alimentação">Vale Alimentação</option>
-      <option value="Dinheiro">Dinheiro</option>
-    </select>
-  </label>
-</div>
+        <label>Forma de Pagamento:
+            <select id="payment-method">
+            <option value="PIX">PIX</option>
+            <option value="Cartão de Crédito">Cartão de Crédito</option>
+            <option value="Débito">Débito</option>
+            <option value="Vale Alimentação">Vale Alimentação</option>
+            <option value="Dinheiro">Dinheiro</option>
+            </select>
+        </label>
+        </div>
 
 
     <button onclick="generateWhatsAppMessage()">Finalizar Pedido</button>
