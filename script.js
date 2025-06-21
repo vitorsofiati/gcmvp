@@ -168,6 +168,13 @@ function toggleCart() {
 }
 
 function generateWhatsAppMessage() {
+  const form = document.getElementById('checkout-form');
+
+  if (!form.checkValidity()) {
+    form.reportValidity(); 
+    return;
+  }
+
   if (cart.length === 0) {
     alert('Seu carrinho está vazio!');
     return;
@@ -176,13 +183,13 @@ function generateWhatsAppMessage() {
   const confirmation = confirm("Para finalizar o pedido, você será redirecionado ao WhatsApp. Por favor, revise a mensagem gerada e clique em ENVIAR para que o mercadinho receba o seu pedido. Deseja continuar?");
   if (!confirmation) return;
 
-  let message = 'Novo pedido:%0A%0A';
+  let message = '*NOVO PEDIDO*%0A%0A';
   cart.forEach(item => {
-    message += `${item.name} x ${item.quantity}%0A`;
+    message += `${item.name} x ${item.quantity}un%0A`;
   });
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  message += `%0ATotal: R$ ${total.toFixed(2)}%0A%0A`;
+  message += `%0A*Total:* R$ ${total.toFixed(2)}%0A%0A`;
 
   const rua = document.getElementById('address-street').value.trim();
   const numero = document.getElementById('address-number').value.trim();
@@ -192,15 +199,16 @@ function generateWhatsAppMessage() {
   const telefone = document.getElementById('address-phone').value.trim();
   const payment = document.getElementById('payment-method').value;
 
-  message += `Endereço:%0A${rua}, ${numero} - ${bairro}, ${cidade}%0A`;
-  if (complemento) message += `Complemento: ${complemento}%0A`;
-  if (telefone) message += `Telefone: ${telefone}%0A`;
-  message += `Forma de Pagamento: ${payment}%0A`;
+  message += `*Endereço:*%0A${rua}, ${numero} - ${bairro}, ${cidade}%0A`;
+  if (complemento) message += `*Complemento*: ${complemento}%0A`;
+  if (telefone) message += `*Telefone*: ${telefone}%0A`;
+  message += `*Forma de Pagamento*: ${payment}%0A`;
 
   const phone = '5513997430587';
   const url = `https://wa.me/${phone}?text=${message}`;
 
   window.open(url, '_blank');
 }
+
 
 renderProducts();

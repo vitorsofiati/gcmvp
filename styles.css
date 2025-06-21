@@ -57,6 +57,7 @@ li {
   min-width: 200px;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
@@ -136,7 +137,6 @@ input, select {
   background: none;
   padding: 4px 0;
   border: none;
-  /* min-width: 250px; */
   box-shadow: none;
   display: flex;
   flex-direction: column;
@@ -186,7 +186,8 @@ input, select {
 }
 
 .cart-item-name {
-  white-space: pre-line;
+    margin-bottom: 6px;
+    white-space: pre-line;
 }
 
 .cart-total {
@@ -204,10 +205,10 @@ input, select {
   }
 
   #products li {
-    min-width: 140px; /* Reduzindo o tamanho mínimo */
-    min-height: 160px;
-    max-width: 45%;    /* Para tentar manter 2 por linha, mesmo em telas pequenas */
-    font-size: 13px;   /* Opcional: diminuir um pouco a fonte */
+    min-width: 140px;
+    min-height: 166px;
+    max-width: 45%;    
+    font-size: 13px;  
     padding: 8px 24px;
   }
 
